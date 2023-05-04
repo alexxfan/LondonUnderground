@@ -25,10 +25,17 @@ public class Main extends Application {
         stage.setScene(scene);
 
         // Load the image and set it to the ImageView with fx:id zoneImage
-        Path imagePath = Paths.get("src/main/resources/Image/Zone1.png");
+        Path imagePath = Paths.get("src/main/resources/Image/Zone1Alt.png");
         InputStream inputStream = Files.newInputStream(imagePath);
         Image image = new Image(inputStream);
+        mainControl.zoneImage.setPreserveRatio(true);
         mainControl.zoneImage.setImage(image);
+        double width = image.getWidth();
+        double height = image.getHeight();
+        double fitWidth = mainControl.zoneImage.getFitWidth();
+        double fitHeight = mainControl.zoneImage.getFitHeight();
+        System.out.println("Image dimensions: " + width + " x " + height + " pixels");
+        System.out.println("ImageView dimensions: " + fitWidth + " x " + fitHeight + " pixels");
 
         stage.show();
     }

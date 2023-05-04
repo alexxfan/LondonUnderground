@@ -1,5 +1,4 @@
-﻿line_name,station_name,color,x,y
-Central Line,Notting Hill Gate,df002c,108,285
+﻿Central Line,Notting Hill Gate,df002c,108,285
 Central Line,Queensway,df002c,164,272
 Central Line,Lancaster Gate,df002c,242,259
 Central Line,Marble Arch,df002c,352,242
@@ -28,7 +27,7 @@ Bakerloo Line,Edgware Road,ab6612,278,174
 Bakerloo Line,Marylebone,ab6612,323,151
 Bakerloo Line,Baker Street,ab6612,361,150
 Bakerloo Line,Regent's Park,ab6612,392,141
-Bakerloo Line,Oxford's Circus,ab6612,460,227
+Bakerloo Line,Oxford Circus,ab6612,460,227
 Bakerloo Line,Picadilly Circus,ab6612,507,281
 Bakerloo Line,Charing Cross,ab6612,567,300
 Bakerloo Line,Embankment,ab6612,583,306
@@ -58,7 +57,7 @@ Circle Line,Liverpool Street,f7dc00,837,199
 Circle Line,Moorgate,f7dc00,797,192
 Circle Line,Barbican,f7dc00,738,173
 Circle Line,Farringdon,f7dc00,691,174
-Circle Line,King's Cross St. Pacras,f7dc00,572,67
+Circle Line,King's Cross St. Pancras,f7dc00,572,67
 Circle Line,Euston Square,f7dc00,496,117
 Circle Line,Great Portland Street,f7dc00,445,138
 Circle Line,Edgware Road,f7dc00,292,181
