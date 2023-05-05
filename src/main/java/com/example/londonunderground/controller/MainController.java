@@ -2,6 +2,7 @@ package com.example.londonunderground.controller;
 
 import com.example.londonunderground.models.Line;
 import com.example.londonunderground.models.Station;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,17 +30,9 @@ public class MainController implements Initializable {
     @FXML
     public ImageView zoneImage;
     @FXML
-    public Button popMap;
+    public Button popMap, clearMap, exitApp, BFS, DFS, DJK, ADFS;
     @FXML
-    public Button clearMap;
-    @FXML
-    public MenuButton avoidStation;
-    @FXML
-    public MenuButton waypointStation;
-    @FXML
-    public MenuButton startStation;
-    @FXML
-    public MenuButton endStation;
+    public MenuButton avoidStation,waypointStation,startStation,endStation;
     @FXML
     public AnchorPane mapPane;
 
@@ -211,9 +204,20 @@ public class MainController implements Initializable {
     }
 
 
+    public void resetMap(ActionEvent actionEvent){
+        mapPane.getChildren().clear();
+    }
+
+    public void exitApp(ActionEvent actionEvent){
+        Platform.exit();
+    }
+
+
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
-    mainControl = this;
+
+        mainControl = this;
+        zoneImage.setImage(API.g);
     }
 }
