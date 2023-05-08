@@ -46,7 +46,7 @@ public class MainController implements Initializable {
 
     public void populateMap(ActionEvent actionEvent) {
         // Read the CSV data from the file
-        Path path = Paths.get("src/main/resources/CSV/zone1Stations.csv");
+        Path path = Paths.get("src/main/resources/CSV/zone1Corrected.csv");
         String csvData = "";
         try {
             csvData = Files.readString(path);

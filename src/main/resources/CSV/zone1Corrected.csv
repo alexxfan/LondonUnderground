@@ -1,0 +1,135 @@
+﻿Central Line,Notting Hill Gate,df002c,111,292
+Central Line,Queensway,df002c,170,278
+Central Line,Lancaster Gate,df002c,249,266
+Central Line,Marble Arch,df002c,360,249
+Central Line,Bond Street,df002c,419,242
+Central Line,Oxford Circus,df002c,471,234
+Central Line,Tottenham Court Road,df002c,539,218
+Central Line,Holborn,df002c,611,209
+Central Line,Chancery Lane,df002c,670,197
+Central Line,St. Paul's,df002c,760,238
+Central Line,Bank,df002c,816,252
+Central Line,Liverpool Street,df002c,857,204
+Picadilly Line,Earl's Court,002d73,107,473
+Picadilly Line,Gloucester Road,002d73,201,448
+Picadilly Line,South Kensington,002d73,260,452
+Picadilly Line,Knightsbridge,002d73,346,375
+Picadilly Line,Hyde Park Corner,002d73,398,362
+Picadilly Line,Green Park,002d73,462,321
+Picadilly Line,Picadilly Circus,002d73,519,288
+Picadilly Line,Leicester Square,002d73,558,272
+Picadilly Line,Covent Garden,002d73,584,256
+Picadilly Line,Holborn,002d73,611,209
+Picadilly Line,Russell Square,002d73,582,150
+Picadilly Line,King's Cross St. Pancras,002d73,586,69
+Bakerloo Line,Paddington,ab6612,249,223
+Bakerloo Line,Edgware Road,ab6612,292,182
+Bakerloo Line,Marylebone,ab6612,330,155
+Bakerloo Line,Baker Street,ab6612,369,154
+Bakerloo Line,Regent's Park,ab6612,434,150
+Bakerloo Line,Oxford Circus,ab6612,471,234
+Bakerloo Line,Picadilly Circus,ab6612,519,288
+Bakerloo Line,Charing Cross,ab6612,581,307
+Bakerloo Line,Embankment,ab6612,595,313
+Bakerloo Line,Waterloo,ab6612,649,353
+Bakerloo Line,Lambeth North,ab6612,663,403
+Bakerloo Line,Elephant & Castle,ab6612,741,450
+Circle Line,Edgware Road,f7dc00,292,181
+Circle Line,Paddington,f7dc00,249,223
+Circle Line,Bayswater,f7dc00,168,264
+Circle Line,Notting Hill Gate,f7dc00,111,292
+Circle Line,High Street Kensington,f7dc00,138,381
+Circle Line,Gloucester Road,f7dc00,201,448
+Circle Line,South Kensington,f7dc00,260,452
+Circle Line,Sloane Square,f7dc00,373,470
+Circle Line,Victoria,f7dc00,450,427
+Circle Line,St. James Park,f7dc00,523,396
+Circle Line,Westminster,f7dc00,576,380
+Circle Line,Embankment,f7dc00,595,313
+Circle Line,Temple,f7dc00,649,274
+Circle Line,Blackfriars,f7dc00,722,265
+Circle Line,Mansion House,f7dc00,782,265
+Circle Line,Cannon Street,f7dc00,804,272
+Circle Line,Tower Hill,f7dc00,894,288
+Circle Line,Aldgate,f7dc00,902,241
+Circle Line,Liverpool Street,f7dc00,857,204
+Circle Line,Moorgate,f7dc00,816,196
+Circle Line,Barbican,f7dc00,755,177
+Circle Line,Farringdon,f7dc00,707,178
+Circle Line,King's Cross St. Pancras,f7dc00,586,69
+Circle Line,Euston Square,f7dc00,508,119
+Circle Line,Great Portland Street,f7dc00,455,142
+Circle Line,Edgware Road,f7dc00,292,181
+Circle Line,Paddington,f7dc00,249,223
+Victoria Line,King's Cross St. Pancras,0076bd,586,69
+Victoria Line,Euston,0076bd,522,96
+Victoria Line,Warren Street,0076bd,491,135
+Victoria Line,Oxford Circus,0076bd,471,234
+Victoria Line,Green Park,0076bd,462,321
+Victoria Line,Victoria,0076bd,450,427
+Victoria Line,Pimlico,0076bd,524,502
+Victoria Line,Vauxhall,0076bd,576,535
+District Line,Edgware Road,0d6928,292,181
+District Line,Paddington,0d6928,249,223
+District Line,Bayswater,0d6928,168,264
+District Line,Notting Hill Gate,0d6928,111,292
+District Line,High Street Kensington,0d6928,138,381
+District Line,Earl's Court,0d6928,107,473
+District Line,Gloucester Road,0d6928,201,448
+District Line,South Kensington,0d6928,260,452
+District Line,Sloane Square,0d6928,373,470
+District Line,Victoria,0d6928,450,427
+District Line,St. James Park,0d6928,523,396
+District Line,Westminster,0d6928,576,380
+District Line,Embankment,0d6928,595,313
+District Line,Temple,0d6928,649,274
+District Line,Blackfriars,0d6928,722,265
+District Line,Mansion House,0d6928,782,265
+District Line,Cannon Street,0d6928,804,272
+District Line,Tower Hill,0d6928,894,288
+District Line,Aldgate East,0d6928,920,229
+Metropolitan Line,Baker Street,8b004c,369,154
+Metropolitan Line,Great Portland Street,8b004c,455,142
+Metropolitan Line,Euston Square,8b004c,508,119
+Metropolitan Line,King's Cross St. Pacras,8b004c,586,69
+Metropolitan Line,Farringdon,8b004c,707,178
+Metropolitan Line,Barbican,8b004c,755,177
+Metropolitan Line,Moorgate,8b004c,816,196
+Metropolitan Line,Liverpool Street,8b004c,857,204
+Metropolitan Line,Aldgate,8b004c,902,241
+Hammersmith & City Line,Paddington,f5a6b3,249,223
+Hammersmith & City Line,Edgware Road,f5a6b3,292,181
+Hammersmith & City Line,Baker Street,f5a6b3,369,154
+Hammersmith & City Line,Great Portland Street,f5a6b3,455,142
+Hammersmith & City Line,Euston Square,f5a6b3,508,119
+Hammersmith & City Line,King's Cross St. Pacras,f5a6b3,586,69
+Hammersmith & City Line,Farringdon,f5a6b3,707,178
+Hammersmith & City Line,Barbican,f5a6b3,755,177
+Hammersmith & City Line,Moorgate,f5a6b3,816,196
+Hammersmith & City Line,Liverpool Street,f5a6b3,857,204
+Hammersmith & City Line,Aldgate East,f5a6b3,920,229
+Jubilee Line,Baker Street,767b7f,369,154
+Jubilee Line,Bond Street,767b7f,419,242
+Jubilee Line,Green Park,767b7f,462,321
+Jubilee Line,Westminster,767b7f,576,380
+Jubilee Line,Waterloo,767b7f,649,353
+Jubilee Line,Southwark,767b7f,709,349
+Jubilee Line,London Bridge,767b7f,831,336
+Northern Line,Waterloo,0,649,353
+Northern Line,Embankment,0,595,313
+Northern Line,Charing Cross,0,583,305
+Northern Line,Leicester Square,0,558,272
+Northern Line,Tottenham Court Road,0,539,218
+Northern Line,Goodge Street,0,516,177
+Northern Line,Warren Street,0,491,135
+Northern Line,Euston,0,522,96
+Northern Line,King's Cross St. Pancras,0,586,69
+Northern Line,Angel,0,704,54
+Northern Line,Old Street,0,825,116
+Northern Line,Liverpool Street,0,857,204
+Northern Line,Bank,0,816,252
+Northern Line,London Bridge,0,831,336
+Northern Line,Borough,0,779,379
+Northern Line,Elephant & Castle,0,741,450
+Waterloo & City Line,Waterloo,89cbc1,649,353
+Waterloo & City Line,Bank,89cbc1,816,252
