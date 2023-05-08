@@ -1,20 +1,20 @@
 package com.example.londonunderground.controller;
 
+import com.example.londonunderground.models.Graph;
 import com.example.londonunderground.models.Line;
+import com.example.londonunderground.models.Route;
 import com.example.londonunderground.models.Station;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.geometry.Point2D;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,9 +23,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.example.londonunderground.models.Graph.graph;
+
 public class MainController implements Initializable {
 
     public static MainController mainControl;
+    private Graph graph = new Graph();
     @FXML
     public ImageView zoneImage;
     @FXML
@@ -42,6 +45,13 @@ public class MainController implements Initializable {
     public MenuButton endStation;
     @FXML
     public AnchorPane mapPane;
+    @FXML
+    public Button shortestPathBFS;
+
+
+    private Station selectedStartStation;
+    private Station selectedEndStation;
+
 
 
     public void populateMap(ActionEvent actionEvent) {
@@ -171,12 +181,13 @@ public class MainController implements Initializable {
         // Set the selected station as the text of the parent MenuButton
         parentMenuButton.setText(station.getStationName());
 
-        // Possible further actions to go here
         if (parentMenuButton == startStation) {
+            selectedStartStation = station;
             drawCircleOnMap(station); //station location test
+        } else if (parentMenuButton == endStation) {
+            selectedEndStation = station;
         }
     }
-
 
 
     private Point2D calculateActualCoordinates(Station station) {
@@ -188,8 +199,6 @@ public class MainController implements Initializable {
 
         return new Point2D(actualX, actualY);
     }
-
-
 
 
     private void drawCircleOnMap(Station station) {
@@ -210,10 +219,40 @@ public class MainController implements Initializable {
         mapPane.getChildren().add(circle);
     }
 
+    // This method is called when the user wants to perform a breadth-first search to find the shortest path between two selected stations
+    public void bfsSearch(ActionEvent actionEvent) {
+        // Check if both start and end stations have been selected
+        if (selectedStartStation == null || selectedEndStation == null) {
+            System.out.println("Please select both start and end stations");
+            return;
+        }
+
+        // Find the shortest route between the selected start and end stations using the Graph's findShortestPath method
+        Route shortestRoute = graph.findShortestPath(selectedStartStation, selectedEndStation);
+
+        // If no path is found, print an error message
+        if (shortestRoute == null) {
+            System.out.println("No path found between the selected stations");
+        } else {
+            // If a path is found, print the path and the number of stops
+            System.out.print("Shortest path: ");
+            List<Station> path = shortestRoute.getPath();
+            for (int i = 0; i < path.size(); i++) {
+                System.out.print(path.get(i).getStationName());
+                if (i < path.size() - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+            System.out.println();
+            System.out.println("Number of stops: " + shortestRoute.getStops());
+        }
+    }
+
 
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
     mainControl = this;
     }
+
 }

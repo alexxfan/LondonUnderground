@@ -1,7 +1,10 @@
 package com.example.londonunderground.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Station {
     //FIELDS
@@ -15,6 +18,8 @@ public class Station {
     // A map of neighboring stations and their distances
     private Map<Station, Double> neighbors;
 
+    private List<Double> distances;
+
 
     // CONSTRUCTOR
     public Station(String stationName, double x, double y) {
@@ -24,6 +29,7 @@ public class Station {
         this.y = y;
         // Initialize the map of neighbors as an empty HashMap
         this.neighbors = new HashMap<>();
+        this.distances = new ArrayList<>();
     }
 
 
@@ -69,10 +75,15 @@ public class Station {
     public void addNeighbor(Station neighbor, double distance) {
         // Add a neighboring station and its distance to the map of neighbors
         this.neighbors.put(neighbor, distance);
+        distances.add(distance);
     }
 
     @Override
     public String toString() {
-        return "Station: " + "Name: " + stationName + ", xCoordinate: " + x + ", yCoordinate: =" + y + ", neighbouring stations: " + neighbors;
+        String neighborNames = neighbors.keySet().stream()
+                .map(Station::getStationName)
+                .collect(Collectors.joining(", "));
+
+        return "Station: " + "Name: " + stationName + ", xCoordinate: " + x + ", yCoordinate: =" + y + ", neighbouring stations: " + neighborNames;
     }
 }

@@ -163,7 +163,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Breath First Search">
+                        <Button fx:id="shortestPathBFS" mnemonicParsing="false" text="Breath First Search" onAction="#bfsSearch">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
