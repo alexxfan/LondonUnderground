@@ -4,6 +4,7 @@ import com.example.londonunderground.models.Graph;
 import com.example.londonunderground.models.Line;
 import com.example.londonunderground.models.Route;
 import com.example.londonunderground.models.Station;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
@@ -51,6 +54,12 @@ public class MainController implements Initializable {
 
     private Station selectedStartStation;
     private Station selectedEndStation;
+    private Circle startStationCircle;
+    private Circle endStationCircle;
+    private Circle startStationOuterRing;
+    private Circle endStationOuterRing;
+
+
 
 
 
@@ -141,20 +150,16 @@ public class MainController implements Initializable {
 
     private void populateMenuButtons(Map<String, Line> lines) {
         Set<Station> uniqueStationsSet = new HashSet<>();
-
         // Loop through each Line object in the lines Map
         for (Line line : lines.values()) {
             // Loop through each Station object in the Line's stations
             // Add the station to the uniqueStations set
             uniqueStationsSet.addAll(line.getStations());
         }
-
         // Convert the Set to a List
         List<Station> uniqueStationsList = new ArrayList<>(uniqueStationsSet);
-
         // Sort the list alphabetically by station names
         uniqueStationsList.sort(Comparator.comparing(Station::getStationName));
-
         // Add the stationMenuItems to all the MenuButtons
         avoidStation.getItems().addAll(createStationMenuItems(uniqueStationsList));
         waypointStation.getItems().addAll(createStationMenuItems(uniqueStationsList));
@@ -164,13 +169,11 @@ public class MainController implements Initializable {
 
     private List<MenuItem> createStationMenuItems(List<Station> stations) {
         List<MenuItem> stationMenuItems = new ArrayList<>();
-
         for (Station station : stations) {
             MenuItem menuItem = new MenuItem(station.getStationName());
             menuItem.setOnAction(e -> handleStationMenuItemClicked(e, station));
             stationMenuItems.add(menuItem);
         }
-
         return stationMenuItems;
     }
 
@@ -183,13 +186,15 @@ public class MainController implements Initializable {
 
         if (parentMenuButton == startStation) {
             selectedStartStation = station;
-            drawCircleOnMap(station); //station location test
+            drawStartStationCircle(station);
         } else if (parentMenuButton == endStation) {
             selectedEndStation = station;
+            drawEndStationCircle(station);
         }
     }
 
 
+    // This method calculates the actual coordinates of a station on the mapPane based on its relative coordinates and the scale of the map image
     private Point2D calculateActualCoordinates(Station station) {
         double scaleX = zoneImage.getBoundsInLocal().getWidth() / zoneImage.getImage().getWidth();
         double scaleY = zoneImage.getBoundsInLocal().getHeight() / zoneImage.getImage().getHeight();
@@ -200,24 +205,91 @@ public class MainController implements Initializable {
         return new Point2D(actualX, actualY);
     }
 
-
-    private void drawCircleOnMap(Station station) {
-        // Remove any existing circles
-        mapPane.getChildren().removeIf(node -> node instanceof Circle);
-
-        // Adjust these values as needed to align the circle correctly
-        double offsetX = 5; // Adjust this value
-        double offsetY = 1; // Adjust this value
-
-        // Calculate the actual x and y coordinates on the ImageView
+    // This method creates a circle and outer ring for a station with a specified color, based on its actual coordinates
+    private void createStationCircle(Circle innerCircle, Circle outerRing, Station station, Color color) {
+        // Calculate the actual coordinates of the station on the mapPane
         Point2D actualCoordinates = calculateActualCoordinates(station);
 
-        // Create a new circle with desired properties
-        Circle circle = new Circle(actualCoordinates.getX(), actualCoordinates.getY(), 5, Color.RED);
+        // Set the center and radius of the inner circle
+        innerCircle.setCenterX(actualCoordinates.getX());
+        innerCircle.setCenterY(actualCoordinates.getY());
+        innerCircle.setRadius(5);
+        innerCircle.setFill(color);
 
-        // Add the circle to the mapPane
-        mapPane.getChildren().add(circle);
+        // Set the center, radius, and color of the outer ring
+        outerRing.setCenterX(actualCoordinates.getX());
+        outerRing.setCenterY(actualCoordinates.getY());
+        outerRing.setRadius(8); // Slightly larger radius for the outer ring
+        outerRing.setFill(Color.TRANSPARENT);
+        outerRing.setStroke(color);
+        outerRing.setStrokeWidth(2);
     }
+
+
+    // This method draws a blue circle and outer ring around the selected start station
+    private void drawStartStationCircle(Station station) {
+        // Remove any existing start station circle and outer ring from the mapPane
+        if (startStationCircle != null) {
+            mapPane.getChildren().removeAll(startStationCircle, startStationOuterRing);
+        }
+        // Create a new circle and outer ring with the specified station and color
+        startStationCircle = new Circle();
+        startStationOuterRing = new Circle();
+        createStationCircle(startStationCircle, startStationOuterRing, station, Color.BLUE);
+        // Add the new circle and outer ring to the mapPane
+        mapPane.getChildren().addAll(startStationCircle, startStationOuterRing);
+    }
+
+    // This method draws a red circle and outer ring around the selected end station
+    private void drawEndStationCircle(Station station) {
+        // Remove any existing end station circle and outer ring from the mapPane
+        if (endStationCircle != null) {
+            mapPane.getChildren().removeAll(endStationCircle, endStationOuterRing);
+        }
+        // Create a new circle and outer ring with the specified station and color
+        endStationCircle = new Circle();
+        endStationOuterRing = new Circle();
+        createStationCircle(endStationCircle, endStationOuterRing, station, Color.RED);
+        // Add the new circle and outer ring to the mapPane
+        mapPane.getChildren().addAll(endStationCircle, endStationOuterRing);
+    }
+
+
+
+    // This method draws a line between each pair of adjacent stations in the shortest path
+    private void drawShortestPath(Route shortestRoute) {
+        // Remove any existing lines from the mapPane
+        mapPane.getChildren().removeIf(node -> node instanceof javafx.scene.shape.Line);
+        // Get the list of stations in the shortest path
+        List<Station> shortestPath = shortestRoute.getPath();
+        // Draw a line between each pair of adjacent stations in the shortest path
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
+            Station start = shortestPath.get(i);
+            Station end = shortestPath.get(i + 1);
+
+            drawLineBetweenStations(start, end, Color.MAGENTA);
+        }
+    }
+
+    // This method draws a line between two stations with a given color
+    private void drawLineBetweenStations(Station start, Station end, Color color) {
+        // Calculate the actual coordinates of the start and end stations on the mapPane
+        Point2D startPoint = calculateActualCoordinates(start);
+        Point2D endPoint = calculateActualCoordinates(end);
+        // Create a new line with the calculated start and end points and set its color and width
+        javafx.scene.shape.Line line = new javafx.scene.shape.Line(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
+        line.setStroke(color);
+        line.setStrokeWidth(4);
+        // Add the line to the mapPane
+        mapPane.getChildren().add(line);
+    }
+
+
+
+
+
+
+
 
     // This method is called when the user wants to perform a breadth-first search to find the shortest path between two selected stations
     public void bfsSearch(ActionEvent actionEvent) {
@@ -226,17 +298,16 @@ public class MainController implements Initializable {
             System.out.println("Please select both start and end stations");
             return;
         }
-
         // Find the shortest route between the selected start and end stations using the Graph's findShortestPath method
         Route shortestRoute = graph.findShortestPath(selectedStartStation, selectedEndStation);
-
         // If no path is found, print an error message
         if (shortestRoute == null) {
             System.out.println("No path found between the selected stations");
         } else {
             // If a path is found, print the path and the number of stops
-            System.out.print("Shortest path: ");
             List<Station> path = shortestRoute.getPath();
+            System.out.println(path.get(0).getStationName()+" to "+ path.get(path.size()-1).getStationName());
+            System.out.print("Shortest path: \n");
             for (int i = 0; i < path.size(); i++) {
                 System.out.print(path.get(i).getStationName());
                 if (i < path.size() - 1) {
@@ -244,7 +315,8 @@ public class MainController implements Initializable {
                 }
             }
             System.out.println();
-            System.out.println("Number of stops: " + shortestRoute.getStops());
+            System.out.println("Number of stops: " + shortestRoute.getStops()+"\n");
+            drawShortestPath(shortestRoute);
         }
     }
 
@@ -255,4 +327,6 @@ public class MainController implements Initializable {
     mainControl = this;
     }
 
+    private class Stroke {
+    }
 }
