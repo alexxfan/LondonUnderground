@@ -5,11 +5,14 @@ import com.example.londonunderground.models.Line;
 import com.example.londonunderground.models.Route;
 import com.example.londonunderground.models.Station;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
@@ -35,21 +38,16 @@ public class MainController implements Initializable {
     @FXML
     public ImageView zoneImage;
     @FXML
-    public Button popMap;
+    public Button popMap, clearMap, shortestPathBFS;
     @FXML
-    public Button clearMap;
-    @FXML
-    public MenuButton avoidStation;
-    @FXML
-    public MenuButton waypointStation;
-    @FXML
-    public MenuButton startStation;
-    @FXML
-    public MenuButton endStation;
+    public MenuButton avoidStation, waypointStation, startStation, endStation;
     @FXML
     public AnchorPane mapPane;
     @FXML
-    public Button shortestPathBFS;
+    public ListView listView;
+
+
+
 
 
     private Station selectedStartStation;
@@ -294,28 +292,28 @@ public class MainController implements Initializable {
     // This method is called when the user wants to perform a breadth-first search to find the shortest path between two selected stations
     public void bfsSearch(ActionEvent actionEvent) {
         // Check if both start and end stations have been selected
+        listView.getItems().clear();
         if (selectedStartStation == null || selectedEndStation == null) {
-            System.out.println("Please select both start and end stations");
+            listView.getItems().add("Please select both start and end stations");
             return;
         }
         // Find the shortest route between the selected start and end stations using the Graph's findShortestPath method
         Route shortestRoute = graph.findShortestPath(selectedStartStation, selectedEndStation);
         // If no path is found, print an error message
         if (shortestRoute == null) {
-            System.out.println("No path found between the selected stations");
+            listView.getItems().add("No path found between the selected stations");
         } else {
             // If a path is found, print the path and the number of stops
             List<Station> path = shortestRoute.getPath();
-            System.out.println(path.get(0).getStationName()+" to "+ path.get(path.size()-1).getStationName());
-            System.out.print("Shortest path: \n");
+            listView.getItems().add(path.get(0).getStationName() + " to " + path.get(path.size() - 1).getStationName());
+            listView.getItems().add("Shortest path:");
             for (int i = 0; i < path.size(); i++) {
-                System.out.print(path.get(i).getStationName());
+                listView.getItems().add(path.get(i).getStationName());
                 if (i < path.size() - 1) {
-                    System.out.print(" -> ");
+                    listView.getItems().add("↓");
                 }
             }
-            System.out.println();
-            System.out.println("Number of stops: " + shortestRoute.getStops()+"\n");
+            listView.getItems().add("Number of stops: " + shortestRoute.getStops() + "\n");
             drawShortestPath(shortestRoute);
         }
     }
