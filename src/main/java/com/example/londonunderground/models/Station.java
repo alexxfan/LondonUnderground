@@ -20,6 +20,8 @@ public class Station {
 
     private List<Double> distances;
 
+    private List<Line> lines;
+
 
     // CONSTRUCTOR
     public Station(String stationName, double x, double y) {
@@ -30,6 +32,7 @@ public class Station {
         // Initialize the map of neighbors as an empty HashMap
         this.neighbors = new HashMap<>();
         this.distances = new ArrayList<>();
+        this.lines = new ArrayList<>(); // initialize the list of lines as an empty ArrayList
     }
 
 
@@ -52,6 +55,10 @@ public class Station {
     public Map<Station, Double> getNeighbors() {
         // Get the map of neighboring stations and their distances
         return neighbors;
+    }
+
+    public List<Line> getLines() {
+        return lines;
     }
 
 
@@ -77,6 +84,12 @@ public class Station {
         this.neighbors.put(neighbor, distance);
         distances.add(distance);
     }
+
+    public void addLine(Line line) { // add a line to the list of lines
+        this.lines.add(line);
+    }
+
+
 
     @Override
     public String toString() {

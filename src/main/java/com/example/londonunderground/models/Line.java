@@ -37,5 +37,8 @@ public class Line {
     public void addStation(Station station) {
         // Add a station to the line by adding it to the list of stations
         this.stations.add(station);
+        station.addLine(this);// add this line to the station
     }
+
+
 }

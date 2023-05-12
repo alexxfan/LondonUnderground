@@ -8,7 +8,7 @@ import java.util.*;
 public class Graph implements Initializable {
     // A static graph object to represent the graph
     public static Graph graph;
-    // A station adjacency list to represent the graph
+    // A station adjacency list to represent vertices on the graph
     private Map<Station, List<Station>> adjacencyList;
 
     // Constructor to initialize the Graph object with an empty adjacency list

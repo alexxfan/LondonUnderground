@@ -38,6 +38,8 @@ public class Main extends Application {
         System.out.println("ImageView dimensions: " + fitWidth + " x " + fitHeight + " pixels");
 
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
