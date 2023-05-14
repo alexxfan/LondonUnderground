@@ -24,16 +24,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class MainController implements Initializable {
 
-    public static MainController mainControl;
-
+    public static MainController mainControl;//Will be used to access the controller from other classes
     private Graph graph = new Graph(); //Will be used to store the graph
-
     private Map<String, Station> stations = new HashMap<>(); //Will be used to store all stations
-
     @FXML
     public ImageView zoneImage;
     @FXML
@@ -42,6 +40,8 @@ public class MainController implements Initializable {
     public Button popMap;
     @FXML
     public Button clearMap;
+    @FXML
+    public Button exitApp;
     @FXML
     public MenuButton avoidStation;
     @FXML
@@ -53,7 +53,9 @@ public class MainController implements Initializable {
     @FXML
     public AnchorPane mapPane;
     @FXML
-    public Button shortestPathBFS;
+    public Button bfsAlgorithm;
+    @FXML
+    public Button dijkstraAlgorithm;
 
     private Station selectedStartStation;
     private Station selectedEndStation;
@@ -139,6 +141,7 @@ public class MainController implements Initializable {
             // Add the station to the line
             lineObj.addStation(stationObj);
 
+
             // Get the previous station on the line, if it exists
             List<Station> currentLineStations = lineObj.getStations();
             if (currentLineStations.size() > 1) {
@@ -147,12 +150,23 @@ public class MainController implements Initializable {
                 // Calculate the distance between the current and previous stations
                 double distance = Math.sqrt(Math.pow(stationObj.getX() - previousStation.getX(), 2)
                         + Math.pow(stationObj.getY() - previousStation.getY(), 2));
+                // Print the distances
+                System.out.println("Calculating distance between " + previousStation.getStationName() + " and " + stationObj.getStationName());
+                System.out.println("Previous station coordinates: " + previousStation.getX() + ", " + previousStation.getY());
+                System.out.println("Current station coordinates: " + stationObj.getX() + ", " + stationObj.getY());
+                System.out.println("Calculated distance: " + distance);
 
-                // Add the current station as a neighbor to the previous station
-                previousStation.addNeighbor(stationObj, distance);
+                // Add the current station as a neighbor to the previous station, if they are not already neighbors
+                if (!previousStation.getNeighbors().containsKey(stationObj)) {
+                    previousStation.addNeighbor(stationObj);
+                    System.out.println("Added " + stationObj.getStationName() + " as a neighbor to " + previousStation.getStationName());
+                }
 
-                // Add the previous station as a neighbor to the current station
-                stationObj.addNeighbor(previousStation, distance);
+                // Add the previous station as a neighbor to the current station, if they are not already neighbors
+                if (!stationObj.getNeighbors().containsKey(previousStation)) {
+                    stationObj.addNeighbor(previousStation);
+                    System.out.println("Added " + previousStation.getStationName() + " as a neighbor to " + stationObj.getStationName());
+                }
             }
         }
 
@@ -304,7 +318,7 @@ public class MainController implements Initializable {
         }
 
         // Find the shortest route between the selected start and end stations using the Graph's findShortestPath method
-        Route shortestRoute = graph.findShortestPath(selectedStartStation, selectedEndStation);
+        Route shortestRoute = graph.findShortestPathBFS(selectedStartStation, selectedEndStation);
 
         // If no path is found, print an error message
         if (shortestRoute == null) {
@@ -362,11 +376,8 @@ public class MainController implements Initializable {
 
             // Print out the line changes
             System.out.println(String.join("\n", lineChanges));
-
-            System.out.println("Number of stops: " + shortestRoute.getStops()+"\n");
+            System.out.println("Number of stops: " + shortestRoute.getStops());
             drawShortestPath(shortestRoute);
-
-
 
             // Updating the ListView
             List<String> outputLines = new ArrayList<>();
@@ -413,9 +424,128 @@ public class MainController implements Initializable {
                     }
                 }
             });
+        }
+    }
 
+    // This method is called when the user wants to perform a Dijkstra's search to find the shortest path between two selected stations
+    public void dijkstraSearch(ActionEvent actionEvent) {
+        // Check if both start and end stations have been selected
+        if (selectedStartStation == null || selectedEndStation == null) {
+            System.out.println("Please select both start and end stations");
+            return;
+        }
 
+        Set<Station> allStations = new HashSet<>(stations.values());
+        Route shortestRoute = graph.findShortestPathDijkstra(allStations, selectedStartStation, selectedEndStation);
 
+        // If no path is found, print an error message
+        if (shortestRoute == null) {
+            System.out.println("No path found between the selected stations");
+        } else {
+            // If a path is found, print the path and the number of stops
+            List<Station> path = shortestRoute.getPath();
+            System.out.println(path.get(0).getStationName()+" to "+ path.get(path.size()-1).getStationName());
+
+            // Initialize variable to keep track of the current line
+            Line currentLine = null;
+            Line nextLine = null;
+
+            // Initialize lists to store the station path and line changes
+            List<String> stationPath = new ArrayList<>();
+            List<String> lineChanges = new ArrayList<>();
+
+            // Iterate over each station in the path
+            for (int i = 0; i < path.size() - 1; i++) {
+                Station station1 = path.get(i);
+                Station station2 = path.get(i + 1);
+
+                // Get the common lines between the two stations
+                List<Line> commonLines = getCommonLines(station1, station2);
+
+                // If there's no current line or the current line is not in the list of common lines,
+                // update the current line and print it out
+                if (currentLine == null || !commonLines.contains(currentLine)) {
+                    // Update the current line (just pick the first one from the list for simplicity)
+                    nextLine = commonLines.get(0);
+
+                    // Add the line change to the list
+                    if (i != 0) { // Avoid adding a line change for the first station
+                        lineChanges.add("Take " + currentLine.getLineName() + " to " + station1.getStationName());
+                        lineChanges.add("Change to " + nextLine.getLineName());
+                    } else { // Handle the initial line at the starting station
+                        lineChanges.add("Start with " + nextLine.getLineName());
+                    }
+                    currentLine = nextLine;
+                }
+
+                // Add the station to the station path list
+                stationPath.add(station1.getStationName());
+            }
+
+            // Add the final station to the station path list
+            stationPath.add(path.get(path.size() - 1).getStationName());
+
+            // Add the final line change to the list
+            lineChanges.add("Take " + currentLine.getLineName() + " to " + path.get(path.size()-1).getStationName());
+
+            // Print out the station path
+            System.out.println("Shortest path: ");
+            System.out.println(String.join(" -> ", stationPath));
+
+            // Print out the line changes
+            System.out.println(String.join("\n", lineChanges));
+            System.out.println("Distance: " + shortestRoute.getDistance());
+
+            drawShortestPath(shortestRoute);
+
+            // Updating the ListView
+            List<String> outputLines = new ArrayList<>();
+
+            // Add the BFS header indicating the start and end stations
+            outputLines.add("\nDijkstra: " + selectedStartStation.getStationName() + " to " + selectedEndStation.getStationName());
+            double distance = shortestRoute.getDistance();//getting the total euclidean distance
+            DecimalFormat decimalFormat = new DecimalFormat("#.00");//formatting the distance to 2 decimal places
+            String roundedDistance = decimalFormat.format(distance);//rounding the distance to 2 decimal places
+            outputLines.add("Distance: " + roundedDistance); //Outputting the total euclidean distance
+
+            // Iterate over the stations in the path and add appropriate indicators
+            for (int i = 0; i < path.size(); i++) {
+                if (i == 0 || i == path.size() - 1) {
+                    // Add a special marker for the first and last stations
+                    outputLines.add("-- " + path.get(i).getStationName() + " --");
+                } else {
+                    // Add a downward arrow marker for intermediate stations
+                    outputLines.add("↓ " + path.get(i).getStationName() + " ↓");
+                }
+            }
+
+            // Add the line directions header and the list of line changes
+            outputLines.add("\nLine Directions:");
+            outputLines.addAll(lineChanges);
+
+            // Create an observable list and populate it with the output lines
+            ObservableList<String> items = FXCollections.observableArrayList(outputLines);
+            routeOutput.setItems(items);
+
+            // Customize the list cell appearance based on its index
+            routeOutput.setCellFactory(lv -> new ListCell<String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(item);
+                        if (getIndex() == 0) { // if this is the first item
+                            // Apply bold and underline styling to the first item
+                            setStyle("-fx-font-weight: bold; -fx-underline: true;");
+                        } else {
+                            // Apply normal styling to other items
+                            setStyle("-fx-font-weight: normal; -fx-underline: false;");
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -430,8 +560,13 @@ public class MainController implements Initializable {
         return commonLines;
     }
 
-
     public void handleMapMouseClicked(MouseEvent event) {
+        // I want to modify this method so that it only works if isMapPopulated is true and print a message to please populate the map if it is false
+        if (!isMapPopulated) {
+            System.out.println("Please populate the map first");
+            return;
+        }
+
         // Get the scale of the image
         double scaleX = zoneImage.getImage().getWidth() / zoneImage.getFitWidth();
         double scaleY = zoneImage.getImage().getHeight() / zoneImage.getFitHeight();
@@ -445,12 +580,26 @@ public class MainController implements Initializable {
             selectedStartStation = findNearestStation(x, y);
             drawStartStationCircle(selectedStartStation);
             selectMenuItem(startStation, selectedStartStation.getStationName());
+
+            // Print the adjacent stations
+            printAdjacentStations(selectedStartStation);
         }
         // If right button is clicked, set the end station
         else if (event.getButton() == MouseButton.SECONDARY) {
             selectedEndStation = findNearestStation(x, y);
             drawEndStationCircle(selectedEndStation);
             selectMenuItem(endStation, selectedEndStation.getStationName());
+
+            // Print the adjacent stations
+            printAdjacentStations(selectedStartStation);
+        }
+    }
+
+    //Print adjacent stations is used for debugging
+    private void printAdjacentStations(Station station) {// Print out the adjacent stations of the given station
+        System.out.println("Adjacent stations to " + station.getStationName() + ":");// Print out the station name
+        for (Station adjacentStation : station.getNeighbors().keySet()) {// Iterate over the adjacent stations
+            System.out.println(adjacentStation.getStationName());// Print out the name of the adjacent station
         }
     }
 
@@ -475,7 +624,6 @@ public class MainController implements Initializable {
         // Return the nearest station
         return nearestStation;
     }
-
 
     private double calculateDistance(double x1, double y1, double x2, double y2) {
         // Calculate the distance between two points using the Euclidean distance formula
@@ -507,9 +655,9 @@ public class MainController implements Initializable {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
-        mainControl = this;
+        mainControl = this; // Set the mainControl to this instance of the controller
 
-
+        // Set the menuButton's text to the first item's text
         zoneImage.setOnMouseClicked(mouseEvent -> {
             // Get the x and y coordinates of the click
             double x = mouseEvent.getX();
@@ -528,9 +676,8 @@ public class MainController implements Initializable {
             }
         });
 
+        // Set the mouse click event handler for the map
         zoneImage.setOnMouseClicked(this::handleMapMouseClicked);
-
-
     }
 
 

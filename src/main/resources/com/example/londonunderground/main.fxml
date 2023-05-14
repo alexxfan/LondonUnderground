@@ -167,12 +167,12 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Dijkstras">
+                        <Button fx:id="dijkstraAlgorithm" mnemonicParsing="false" text="Dijkstras" onAction="#dijkstraSearch">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="shortestPathBFS" mnemonicParsing="false" onAction="#bfsSearch" text="Breath First Search">
+                        <Button fx:id="bfsAlgorithm" mnemonicParsing="false" onAction="#bfsSearch" text="Breath First Search">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
