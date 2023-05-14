@@ -35,11 +35,11 @@ public class MainController implements Initializable {
     @FXML
     public ImageView zoneImage;
     @FXML
-    public ListView routeOutput;
+    public ListView routeOutput, waypointView, avoidView;
     @FXML
-    public Button popMap;
+    public Button popMap, addWaypointButton, removeWaypointButton;
     @FXML
-    public Button clearMap;
+    public Button clearMap, addAvoidButton, removeAvoidButton;
     @FXML
     public Button exitApp;
     @FXML
@@ -201,6 +201,37 @@ public class MainController implements Initializable {
         }
         return stationMenuItems;
     }
+
+    public void addWaypoint(ActionEvent actionEvent) {
+        String newWaypoint = waypointStation.getText();
+
+        if (waypointView.getItems().contains(newWaypoint)) {
+            //station has already been added
+            return;
+        }
+        waypointView.getItems().add(newWaypoint);
+    }
+
+    public void removeWaypoint(ActionEvent actionEvent) {
+        String selectedWaypoint = (String) waypointView.getSelectionModel().getSelectedItem();
+        waypointView.getItems().remove(selectedWaypoint);
+    }
+
+    public void addAvoid(ActionEvent actionEvent) {
+        String newAvoid = avoidStation.getText();
+
+        if (avoidView.getItems().contains(newAvoid)) {
+            //station has already been added
+            return;
+        }
+        avoidView.getItems().add(newAvoid);
+    }
+
+    public void removeAvoid(ActionEvent actionEvent) {
+        String selectedAvoid = (String) avoidView.getSelectionModel().getSelectedItem();
+        avoidView.getItems().remove(selectedAvoid);
+    }
+
 
     private void handleStationMenuItemClicked(ActionEvent event, Station station) {
         MenuItem clickedMenuItem = (MenuItem) event.getSource();
@@ -646,6 +677,8 @@ public class MainController implements Initializable {
         mapPane.getChildren().removeIf(node -> node instanceof javafx.scene.shape.Line);
         //also clear the listview
         routeOutput.getItems().clear();
+        avoidView.getItems().clear();
+        waypointView.getItems().clear();
     }
 
     public void closeApplication(ActionEvent actionEvent) {
