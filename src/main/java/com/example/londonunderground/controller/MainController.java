@@ -818,6 +818,15 @@ public class MainController implements Initializable {
 
             // Populate the tree view with the found paths
             populateTreeView(depthFirstTree, paths);
+
+            // Add a listener to the selection model of the tree view
+            MultipleSelectionModel<TreeItem<String>> selectionModel = depthFirstTree.getSelectionModel();
+            selectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue instanceof RouteTreeItem) {
+                    Route selectedRoute = ((RouteTreeItem) newValue).getRoute();
+                    updateListViewWithRouteDetails(selectedRoute);
+                }
+            });
         } catch (NumberFormatException e) {
             // Show an alert dialog to the user
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -828,7 +837,81 @@ public class MainController implements Initializable {
         }
     }
 
+    // Populate the list view with the selected DFS route details
+    private void updateListViewWithRouteDetails(Route selectedRoute) {
+        List<Station> path = selectedRoute.getPath();
+        Line currentLine = null;
+        Line nextLine = null;
+        List<String> stationPath = new ArrayList<>();
+        List<String> lineChanges = new ArrayList<>();
+        int lineChangeCount = 0;
 
+        // Iterate over the path to determine station path and line changes
+        for (int i = 0; i < path.size() - 1; i++) {
+            Station station1 = path.get(i);
+            Station station2 = path.get(i + 1);
+            List<Line> commonLines = getCommonLines(station1, station2);
+
+            if (currentLine == null || !commonLines.contains(currentLine)) {
+                nextLine = commonLines.get(0);
+                if (i != 0) {
+                    lineChangeCount++;
+                }
+
+                if (i != 0) {
+                    lineChanges.add("Take " + currentLine.getLineName() + " to " + station1.getStationName());
+                    lineChanges.add("Change to " + nextLine.getLineName());
+                } else {
+                    lineChanges.add("Start with " + nextLine.getLineName());
+                }
+                currentLine = nextLine;
+            }
+            stationPath.add(station1.getStationName());
+        }
+
+        // Add the last station in the path
+        stationPath.add(path.get(path.size() - 1).getStationName());
+        lineChanges.add("Take " + currentLine.getLineName() + " to " + path.get(path.size() - 1).getStationName());
+
+        // Prepare the output lines for the ListView
+        List<String> outputLines = new ArrayList<>();
+        outputLines.add("\nDFS: " + path.get(0).getStationName() + " to " + path.get(path.size() - 1).getStationName());
+        outputLines.add("Number of stops: " + selectedRoute.getStops());
+        outputLines.add("Number of line changes: " + lineChangeCount);
+
+        for (int i = 0; i < path.size(); i++) {
+            if (i == 0 || i == path.size() - 1) {
+                outputLines.add("-- " + path.get(i).getStationName() + " --");
+            } else {
+                outputLines.add("↓ " + path.get(i).getStationName() + " ↓");
+            }
+        }
+
+        outputLines.add("\nLine Directions:");
+        outputLines.addAll(lineChanges);
+
+        // Update the ListView with the output lines
+        ObservableList<String> items = FXCollections.observableArrayList(outputLines);
+        routeOutput.setItems(items);
+
+        // Customize the ListView cells to highlight certain lines
+        routeOutput.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    if (getIndex() == 0) {
+                        setStyle("-fx-font-weight: bold; -fx-underline: true;");
+                    } else {
+                        setStyle("-fx-font-weight: normal; -fx-underline: false;");
+                    }
+                }
+            }
+        });
+    }
 
     public void populateTreeView(TreeView<String> treeView, List<Route> paths) {
         // Create root node
