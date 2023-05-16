@@ -51,8 +51,8 @@
                                     </MenuButton>
                                     <HBox prefHeight="28.0" prefWidth="250.0">
                                        <children>
-                                          <Button mnemonicParsing="false" text="Add" />
-                                          <Button mnemonicParsing="false" text="Remove">
+                                          <Button fx:id="addWaypointButton" mnemonicParsing="false" text="Add" onAction="#addWaypoint"/>
+                                          <Button fx:id="removeWaypointButton" mnemonicParsing="false" text="Remove" onAction="#removeWaypoint">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
@@ -62,7 +62,7 @@
                                           <Insets left="60.0" top="5.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <TreeView prefHeight="96.0" prefWidth="241.0" />
+                                    <ListView fx:id="waypointView" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="250.0">
@@ -84,8 +84,8 @@
                                           </MenuButton>
                                           <HBox prefHeight="28.0" prefWidth="250.0">
                                              <children>
-                                                <Button mnemonicParsing="false" text="Add" />
-                                                <Button mnemonicParsing="false" text="Remove">
+                                                <Button fx:id="addAvoidButton" mnemonicParsing="false" text="Add" onAction="#addAvoid"/>
+                                                <Button fx:id="removeAvoidButton" mnemonicParsing="false" text="Remove" onAction="#removeAvoid">
                                                    <HBox.margin>
                                                       <Insets left="20.0" />
                                                    </HBox.margin>
@@ -95,7 +95,7 @@
                                                 <Insets left="60.0" top="5.0" />
                                              </VBox.margin>
                                           </HBox>
-                                          <TreeView prefHeight="96.0" prefWidth="250.0" />
+                                          <ListView fx:id="avoidView" prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </VBox>
                                  </children>
