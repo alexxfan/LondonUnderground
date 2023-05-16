@@ -3,36 +3,55 @@ package com.example.londonunderground.models;
 import java.util.List;
 
 public class Route {
-    // A list of Station objects that represent the path of the route
-    private List<Station> path;
-    // An integer that represents the number of stops in the route
-    private int stops; // number of stops in the route
+    // FIELDS
+    private List<Station> path; // List of stations in the route
+    private int stops; // Number of stops in the route
     private double distance; // Total distance of the route
+    private int lineChanges; // Number of line changes in the route
+    private double lineChangePenalty; // Line change penalty for the route
 
-    // Constructor to initialize the Route object with a path and number of stops
+    // CONSTRUCTORS
     public Route(List<Station> path, int stops) {
         this.path = path;
         this.stops = stops;
-        this.distance = 0; // default value
+        this.distance = 0; // Default value
+        this.lineChanges = getLineChanges(); // Calculate the number of line changes
     }
 
     public Route(List<Station> path, double distance) {
         this.path = path;
         this.distance = distance;
-        this.stops = 0; // default value
+        this.stops = 0; // Default value
+        this.lineChanges = getLineChanges(); // Calculate the number of line changes
+    }
+
+    public Route(List<Station> path, int lineChanges, double distance, double lineChangePenalty) {
+        this.path = path;
+        this.lineChanges = lineChanges;
+        this.distance = distance;
+        this.stops = path.size() - 1; // Number of stops is one less than the number of stations
+        this.lineChangePenalty = lineChangePenalty; // Set the lineChangePenalty
     }
 
     // GETTERS
     public List<Station> getPath() {
         return path;
-    } // Getter method to retrieve the path of the route
+    }
 
     public int getStops() {
         return stops;
-    } // Getter method to retrieve the number of stops in the route
+    }
 
     public double getDistance() {
         return distance;
-    }// Getter method to retrieve the total distance of the route
-}
+    }
 
+    public int getLineChanges() {
+        return lineChanges;
+    }
+
+    public double getLineChangePenalty() {
+        return lineChangePenalty;
+    }
+
+}

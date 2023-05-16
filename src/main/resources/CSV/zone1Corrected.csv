@@ -116,21 +116,21 @@ Jubilee Line,Westminster,767b7f,576,380
 Jubilee Line,Waterloo,767b7f,649,353
 Jubilee Line,Southwark,767b7f,709,349
 Jubilee Line,London Bridge,767b7f,831,336
-Northern Line,Waterloo,0,649,353
-Northern Line,Embankment,0,595,313
-Northern Line,Charing Cross,0,583,305
-Northern Line,Leicester Square,0,558,272
-Northern Line,Tottenham Court Road,0,539,218
-Northern Line,Goodge Street,0,516,177
-Northern Line,Warren Street,0,491,135
-Northern Line,Euston,0,522,96
-Northern Line,King's Cross St. Pancras,0,586,69
-Northern Line,Angel,0,704,54
-Northern Line,Old Street,0,825,116
-Northern Line,Liverpool Street,0,857,204
-Northern Line,Bank,0,816,252
-Northern Line,London Bridge,0,831,336
-Northern Line,Borough,0,779,379
-Northern Line,Elephant & Castle,0,741,450
+Northern Line,Waterloo,000000,649,353
+Northern Line,Embankment,000000,595,313
+Northern Line,Charing Cross,000000,583,305
+Northern Line,Leicester Square,000000,558,272
+Northern Line,Tottenham Court Road,000000,539,218
+Northern Line,Goodge Street,000000,516,177
+Northern Line,Warren Street,000000,491,135
+Northern Line,Euston,000000,522,96
+Northern Line,King's Cross St. Pancras,000000,586,69
+Northern Line,Angel,000000,704,54
+Northern Line,Old Street,000000,825,116
+Northern Line,Liverpool Street,000000,857,204
+Northern Line,Bank,000000,816,252
+Northern Line,London Bridge,000000,831,336
+Northern Line,Borough,000000,779,379
+Northern Line,Elephant & Castle,000000,741,450
 Waterloo & City Line,Waterloo,89cbc1,649,353
 Waterloo & City Line,Bank,89cbc1,816,252

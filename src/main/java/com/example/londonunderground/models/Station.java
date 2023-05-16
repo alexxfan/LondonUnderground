@@ -18,6 +18,7 @@ public class Station {
     private Map<Station, Double> neighbors;
     private List<Double> distances;// a list of distances to the neighbors
     private List<Line> lines;// a list of lines that the station is on
+
     // Fields for Dijkstra's algorithm
     private double distanceFromStart = Double.MAX_VALUE; // distance from the start station
     private Station previousStation; // previous station in the shortest path from the start station
@@ -93,7 +94,6 @@ public class Station {
     public void setPreviousStation(Station previousStation) {
         this.previousStation = previousStation;
     }
-
 
     // METHODS
     public void addNeighbor(Station neighbor) {

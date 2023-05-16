@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -157,26 +158,35 @@
                               <Font name="System Bold" size="22.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" text="Depth First Search">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button alignment="TOP_CENTER" mnemonicParsing="false" text="All Depth First">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="dijkstraAlgorithm" mnemonicParsing="false" text="Dijkstras" onAction="#dijkstraSearch">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
                         <Button fx:id="bfsAlgorithm" mnemonicParsing="false" onAction="#bfsSearch" text="Breath First Search">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
+                        <Button fx:id="dijkstraAlgorithm" mnemonicParsing="false" onAction="#dijkstraSearch" text="Dijkstras">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="dijkstrasWithLineCost" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#dijkstraSearchWithPenalty" text="Dijkstras with Line Change Cost">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="depthFirstSearchButton" mnemonicParsing="false" onAction="#depthFirstSearch" text="Depth First Search">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <HBox alignment="CENTER" prefHeight="26.0" prefWidth="207.0">
+                           <children>
+                              <Label text="# of DFS Permutations: " />
+                              <TextField fx:id="numPermutations" prefHeight="25.0" prefWidth="48.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
                         <Label text="Depth First List">
                            <VBox.margin>
                               <Insets top="20.0" />
@@ -185,7 +195,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TreeView prefHeight="190.0" prefWidth="250.0" />
+                        <TreeView fx:id="depthFirstTree" prefHeight="190.0" prefWidth="250.0" />
                         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="250.0">
                            <children>
                               <Button fx:id="popMap" mnemonicParsing="false" onAction="#populateMap" text="Populate Map">
@@ -193,14 +203,14 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="clearMap" mnemonicParsing="false" text="Clear Map" onAction="#clearMap">
+                              <Button fx:id="clearMap" mnemonicParsing="false" onAction="#clearMap" text="Clear Map">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
-                        <Button fx:id="exitApp" mnemonicParsing="false" text="Exit application" onAction="#closeApplication">
+                        <Button fx:id="exitApp" mnemonicParsing="false" onAction="#closeApplication" text="Exit application">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
