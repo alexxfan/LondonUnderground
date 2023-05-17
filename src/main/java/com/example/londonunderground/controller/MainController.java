@@ -838,6 +838,7 @@ public class MainController implements Initializable {
         Station startStation = selectedStartStation;
         Station endStation = selectedEndStation;
 
+        routeOutput.getItems().clear();
         try {
             // Get the maximum number of paths from the numPermutations TextBox
             int maxPaths = Integer.parseInt(numPermutations.getText());
