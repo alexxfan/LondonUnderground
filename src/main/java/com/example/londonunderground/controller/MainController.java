@@ -83,7 +83,12 @@ public class MainController implements Initializable {
     public void populateMap(ActionEvent actionEvent) {
         // Check if the map is already populated
         if (isMapPopulated) {
-            System.out.println("Map already populated");
+            // Show an alert dialog to the user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Map is already populated");
+            alert.showAndWait();
             return;
         }
 
