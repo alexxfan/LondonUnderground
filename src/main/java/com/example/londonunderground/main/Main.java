@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class Main extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("London Underground Route Finder");
         stage.setScene(scene);
+
 
         // Load the image and set it to the ImageView with fx:id zoneImage
         Path imagePath = Paths.get("src/main/resources/Image/Zone1.png");

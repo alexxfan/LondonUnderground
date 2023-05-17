@@ -413,7 +413,13 @@ public class MainController implements Initializable {
     public void bfsSearch(ActionEvent actionEvent) {
         // Check if both start and end stations have been selected
         if (selectedStartStation == null || selectedEndStation == null) {
-            System.out.println("Please select both start and end stations");
+//            System.out.println("Please select both start and end stations");
+            // Show an alert dialog to the user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter both start and end stations.");
+            alert.showAndWait();
             return;
         }
 
@@ -423,6 +429,7 @@ public class MainController implements Initializable {
         // If no path is found, print an error message
         if (shortestRoute == null) {
             System.out.println("No path found between the selected stations");
+
         } else {
             // Print the start and end stations
             List<Station> path = shortestRoute.getPath();
@@ -541,7 +548,13 @@ public class MainController implements Initializable {
     public void dijkstraSearch(ActionEvent actionEvent) {
         // Check if both the start and end stations have been selected
         if (selectedStartStation == null || selectedEndStation == null) {
-            System.out.println("Please select both start and end stations");
+//            System.out.println("Please select both start and end stations");
+            // Show an alert dialog to the user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select both start and end stations");
+            alert.showAndWait();
             return;
         }
 
@@ -553,7 +566,13 @@ public class MainController implements Initializable {
 
         // If no path is found, print an error message
         if (shortestRoute == null) {
-            System.out.println("No path found between the selected stations");
+            // Show an alert dialog to the user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No path found between selected stations");
+            alert.showAndWait();
+            return;
         } else {
             // Print the start and end stations
             List<Station> path = shortestRoute.getPath();
@@ -675,7 +694,12 @@ public class MainController implements Initializable {
     public void dijkstraSearchWithPenalty(ActionEvent actionEvent) {
         // Check if both start and end stations have been selected
         if (selectedStartStation == null || selectedEndStation == null) {
-            System.out.println("Please select both start and end stations");
+            // Show an alert dialog to the user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select both start and end stations");
+            alert.showAndWait();
             return;
         }
 
@@ -980,7 +1004,12 @@ public class MainController implements Initializable {
     public void handleMapMouseClicked(MouseEvent event) {
         // I want to modify this method so that it only works if isMapPopulated is true and print a message to please populate the map if it is false
         if (!isMapPopulated) {
-            System.out.println("Please populate the map first");
+//            System.out.println("Please populate the map first");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Input Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please populate the map first");
+            alert.showAndWait();
             return;
         }
 

@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 
 public class Station {
     //FIELDS
-    // The name of the station
     private String stationName;
-    // The x-coordinate of the station
+    // coordinates
     private double x;
-    // The y-coordinate of the station
     private double y;
     // A map of neighboring stations and their distances
     private Map<Station, Double> neighbors;
@@ -25,34 +23,28 @@ public class Station {
 
     // CONSTRUCTOR
     public Station(String stationName, double x, double y) {
-        // Initialize the station with a name, x-coordinate, and y-coordinate
         this.stationName = stationName;
         this.x = x;
         this.y = y;
-        // Initialize the map of neighbors as an empty HashMap
         this.neighbors = new HashMap<>();
         this.distances = new ArrayList<>();
-        this.lines = new ArrayList<>(); // initialize the list of lines as an empty ArrayList
+        this.lines = new ArrayList<>();
     }
 
     // GETTERS
     public String getStationName() {
-        // Get the name of the station
         return stationName;
     }
 
     public double getX() {
-        // Get the x-coordinate of the station
         return x;
     }
 
     public double getY() {
-        // Get the y-coordinate of the station
         return y;
     }
 
     public Map<Station, Double> getNeighbors() {
-        // Get the map of neighboring stations and their distances
         return neighbors;
     }
 
@@ -60,12 +52,10 @@ public class Station {
         return lines;
     }
 
-    // Getter and setter for distanceFromStart
     public double getDistanceFromStart() {
         return distanceFromStart;
     }
 
-    // Getter and setter for previousStation
     public Station getPreviousStation() {
         return previousStation;
     }
@@ -112,6 +102,7 @@ public class Station {
         this.lines.add(line);
     }
 
+    // toString
     @Override
     public String toString() {
         String neighborNames = neighbors.keySet().stream()
