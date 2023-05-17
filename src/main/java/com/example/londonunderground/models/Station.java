@@ -118,6 +118,6 @@ public class Station {
                 .map(Station::getStationName)
                 .collect(Collectors.joining(", "));
 
-        return "Station: " + "Name: " + stationName + ", xCoordinate: " + x + ", yCoordinate: =" + y + ", neighbouring stations: " + neighborNames;
+        return "Station: " + "Name: " + stationName + ", xCoordinate: " + x + ", yCoordinate: " + y + ", neighboring stations: " + neighborNames;
     }
 }
