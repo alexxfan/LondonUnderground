@@ -7,13 +7,13 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StationTest {
+public class StationTest{
     private Station station;
     private Station neighbor1;
     private Station neighbor2;
 
     @Before
-    public void setUp() {
+    public void setUp(){
         // set up 3 sample stations
         station = new Station("Station Alex", 0, 0);
         neighbor1 = new Station("Station Killian", 3, 4);
@@ -21,7 +21,7 @@ public class StationTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    public void testGettersAndSetters(){
         // test the getters
         Assert.assertEquals("Station Alex", station.getStationName());
         Assert.assertEquals(0, station.getX(), 0);
@@ -38,7 +38,7 @@ public class StationTest {
     }
 
     @Test
-    public void testAddNeighbor() {
+    public void testAddNeighbor(){
         // Add neighbors
         station.addNeighbor(neighbor1);
         station.addNeighbor(neighbor2);
@@ -51,7 +51,7 @@ public class StationTest {
     }
 
     @Test
-    public void testCalculateDistanceTo() {
+    public void testCalculateDistanceTo(){
         // calculating the distance between stations
         double distance1 = station.calculateDistanceTo(neighbor1);
         double distance2 = station.calculateDistanceTo(neighbor2);
@@ -61,7 +61,7 @@ public class StationTest {
     }
 
     @Test
-    public void testAddLine() {
+    public void testAddLine(){
         // Add lines
         Line lineA = new Line("Line A", "Magenta");
         Line lineB = new Line("Line B", "Red");
@@ -75,7 +75,7 @@ public class StationTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString(){
         station.addNeighbor(neighbor1);
         station.addNeighbor(neighbor2);
 
