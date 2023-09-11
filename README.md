@@ -24,3 +24,13 @@ This JavaFX application helps travelers find routes between stations on the Lond
 - Use latitude and longitude to calculate Euclidean distances between stations.
 - Utilize CSV files: one for the map data and one for route information.
 
+- ## Setting up
+
+To run the London Underground Route Finder application:
+
+   ```bash
+   1. git clone https://github.com/alexxfan/LondonUnderground.git
+   2. cd LondonUnderground
+   3. java -jar target/LondonUnderground.jar
+   
+
