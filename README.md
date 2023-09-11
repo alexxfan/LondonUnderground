@@ -29,8 +29,8 @@ This JavaFX application helps travelers find routes between stations on the Lond
 To run the London Underground Route Finder application:
 
    ```bash
-   1. git clone https://github.com/alexxfan/LondonUnderground.git
-   2. cd LondonUnderground
-   3. java -jar target/LondonUnderground.jar
+   git clone https://github.com/alexxfan/LondonUnderground.git
+   cd LondonUnderground
+   java -jar target/LondonUnderground.jar
    
 
